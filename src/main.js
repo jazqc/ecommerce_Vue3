@@ -17,7 +17,8 @@ const myLightTheme = {
     primary: '#34495E',
     primarySh: '#34495E',
     secondary: '#E1BEE7',
-    complementary: '#85CE78'
+    complementary: '#85CE78',
+    whiteSoft: '#f8f8f8'
   },
 }
 

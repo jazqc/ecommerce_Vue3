@@ -1,86 +1,141 @@
 <template>
-    <div>
-      <v-img
-        class="mx-auto my-6"
-        max-width="228"
-        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
-      ></v-img>
-  
-      <v-card
-        class="mx-auto pa-12 pb-8"
-        elevation="8"
-        max-width="448"
-        rounded="lg"
-      >
+  <div>
+    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+      <div v-if="showLoginForm">
         <div class="text-subtitle-1 text-medium-emphasis">Account</div>
-  
-        <v-text-field
-          density="compact"
-          placeholder="Email address"
-          prepend-inner-icon="mdi-email-outline"
-          variant="outlined"
-        ></v-text-field>
-  
-        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-          Password
-  
-          <a
-            class="text-caption text-decoration-none text-blue"
-            href="#"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Forgot login password?</a>
-        </div>
-  
-        <v-text-field
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
-          density="compact"
-          placeholder="Enter your password"
-          prepend-inner-icon="mdi-lock-outline"
-          variant="outlined"
-          @click:append-inner="visible = !visible"
-        ></v-text-field>
-  
-        <v-card
-          class="mb-12"
-          color="surface-variant"
-          variant="tonal"
-        >
-          <v-card-text class="text-medium-emphasis text-caption">
-            Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
-          </v-card-text>
-        </v-card>
-  
-        <v-btn
-          block
-          class="mb-8"
-          color="blue"
-          size="large"
-          variant="tonal"
-        >
-          Log In
-        </v-btn>
-  
-        <v-card-text class="text-center">
-          <a
-            class="text-blue text-decoration-none"
-            href="#"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
-          </a>
-        </v-card-text>
-      </v-card>
-    </div>
-  </template>
-  
-  <script>
-    export default {
-      data: () => ({
-        visible: false,
-      }),
+        <v-form ref="loginForm" @submit.prevent="submit">
+          <v-text-field density="compact" placeholder="Email address" prepend-inner-icon="mdi-email-outline" id="email"
+            type="email" v-model="formData.email" :rules="emailRules" required></v-text-field>
+
+          <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+            Password
+
+            <a class="text-caption text-decoration-none text-blue" href="#" rel="noopener noreferrer"
+              target="_blank">
+              Forgot login password?</a>
+          </div>
+
+          <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'" density="compact" placeholder="Enter your password"
+            prepend-inner-icon="mdi-lock-outline" id="password" v-model="formData.password"
+            :rules="passwordRules" required @click:append-inner="visible = !visible"></v-text-field>
+
+          <div v-if="errors.length > 0" class="text-red">
+            <ul>
+              <li v-for="error in errors" :key="error.msg">{{ error.msg }}</li>
+            </ul>
+          </div>
+
+          <v-btn block class="mb-8" color="blue" size="large" variant="tonal" type="submit" :loading="loading" @click="load">
+              Log In
+          </v-btn>
+
+          <v-btn block class="mb-8 text-none text-subtitle-1" color="primary" size="large"
+            @click="showSignUpForm = true, showLoginForm = false">
+            No tienes cuenta? Regístrese
+            <v-icon icon="mdi-chevron-right"></v-icon>
+          </v-btn>
+        </v-form>
+      </div>
+
+      <v-form v-if="showSignUpForm">
+        <signUpForm></signUpForm>
+      </v-form>
+    </v-card>
+  </div>
+
+</template>
+
+<script>
+import axios from 'axios';
+import signUpForm from './signUpForm.vue';
+import { useAuthStore } from '../stores/store';
+
+export default {
+  name: 'loginForm',
+  data: () => ({
+    showSignUpForm: false,
+    showLoginForm: true,
+    visible: false,
+    errors: [],
+    loading: false,
+    // isLoggedIn: { state: false, rol: "" },
+    formData: {
+      email: '',
+      password: '',
+    },
+    emailRules: [
+      value => !!value || 'Debe ingresar su correo electrónico'
+    ],
+    passwordRules: [
+      value => (value && value.length >= 6) || 'La contraseña debe ser de 6 dígitos'
+    ],
+  }),
+  components: {
+    signUpForm
+  },
+
+  methods: {
+    
+    load () {
+        this.loading = true
+        setTimeout(() => (this.loading = false), 3000)
+      },
+    submit() {
+      this.$refs.loginForm.validate().then(valid => {
+        if (valid) {
+          axios.post('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/auth/login', this.formData)
+            .then((response) => {
+              console.log(response);
+              this.formData.email = '';
+              this.formData.password = '';
+
+            const userData = {
+            name: response.data.user.name,
+            email: response.data.user.email,
+            rol: response.data.user.rol,
+            token: response.data.token
+          };
+          console.log(userData)
+
+          localStorage.setItem('userData', JSON.stringify(userData));
+              this.isLoading = false;
+
+              const store = useAuthStore();
+              store.setUserData(userData)
+              this.$emit('login-successful');
+
+              // if (userData.rol === "50yun4sm1n") {
+              //   console.log("el user es admin")
+              //   this.isLoggedIn.rol = 'admin';
+              //   store.setIsAdminLogged(true); 
+              //   store.setIsUserLogged(false)
+              // } else {
+              //   console.log("el user no es admin")
+              //   this.isLoggedIn.rol = 'user';
+              //   store.setIsAdminLogged(false);
+              //   store.setIsUserLogged(true);
+              // }
+
+              
+              
+          // localStorage.setItem('userData', JSON.stringify(userData));
+          // userData.rol === "50yun4sm1n"? store.setIsAdminLogged(true): store.setIsUserLogged(true) 
+        })
+
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors;
+          } else {
+            this.errors = [{ msg: 'Ha ocurrido un error, intentelo nuevamente' }];
+
+          }
+        });
     }
-  </script>
+  });
+}
+  }
+  }
+
+</script>

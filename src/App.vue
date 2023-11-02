@@ -1,24 +1,44 @@
-
-<script setup>
-import { RouterView } from 'vue-router'
-import navBar from './components/navBar.vue';
-import appBar from './components/appBar.vue'
-</script>
-
 <template>
-<v-app>
-  <appBar class="bar"></appBar>
-  <navBar></navBar>
-<v-main>
-<v-content>
-    <RouterView />
-</v-content>
-</v-main>
-</v-app>
+  <v-app>
+    <appBar></appBar>
+    <navBar></navBar>
+    <v-main>
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
+
+<script>
+import { RouterView } from 'vue-router';
+import { useAuthStore } from './stores/store';
+import { watch } from 'vue';
+import appBar from './components/appBar.vue';
+import navBar from './components/navBar.vue';
+
+export default {
+  components: {
+    appBar,
+    navBar,
+  },
+  setup() {
+    const store = useAuthStore();
+
+    const updateStore = () => {
+      const storedUserData = localStorage.getItem('userData');
+      if (storedUserData) {
+        const parsedUserData = JSON.parse(storedUserData);
+        store.setUserData(parsedUserData);
+      }
+    };
+
+    watch(() => localStorage.getItem('userData'), updateStore);
+    updateStore();
+  },
+};
+</script>
 
 <style>
 .bar {
-width: 100%;
+  width: 100%;
 }
 </style>

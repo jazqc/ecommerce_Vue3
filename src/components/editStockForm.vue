@@ -1,0 +1,46 @@
+<template>
+    <v-form @submit.prevent="submitForm" class="justify-center">
+      <v-text-field v-model="formData.id" label="ID"></v-text-field>
+      <v-text-field v-model="formData.stock" label="Stock"></v-text-field>
+      <v-btn block type="submitForm" color="primary">Submit</v-btn>
+    </v-form>
+  </template>
+  
+  <script>
+  import { useAuthStore } from '../stores/store';
+  import axios from 'axios';
+  export default {
+    data: () => ({
+
+        formData: {
+    id: '',
+    stock: ''
+        }
+    }),
+    methods: {
+      submitForm() {
+        const store = useAuthStore();
+        const token = store.userData.token 
+        const headers = {
+        'x-token': token
+      };
+
+        console.log(this.formData);
+      const { id, stock} = this.formData
+      axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products/changeStock', this.formData, { headers })
+      .then((response) => {
+          console.log(response);
+          this.formData.id = '';
+          this.formData.stock = '';
+
+        })
+        .catch((error) => {
+    console.error(error);
+
+  });
+    },
+      }
+    }
+  </script>
+
+  //ACTUALIZAR TABLA!
