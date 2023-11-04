@@ -5,6 +5,9 @@ import ContactView from '../views/ContactView.vue'
 import ProductosView from '../views/ProductosView.vue'
 import CarritoView from '../views/CarritoView.vue'
 import AdminView from '../views/AdminView.vue'
+import ComprasView from '../views/ComprasView.vue'
+import FavsView from '../views/FavsView.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +42,21 @@ const router = createRouter({
       name: 'adminPanel',
       component: AdminView
     },
+    {
+      path: '/compras',
+      name: 'compras',
+      component: ComprasView
+    },
+    {
+      path: '/favs',
+      name: 'favoritos',
+      component: FavsView
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView
+    }
   ]
 })
 

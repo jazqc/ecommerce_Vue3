@@ -27,6 +27,7 @@ import { ref } from 'vue';
 
 export default {
   name: 'navBar',
+  
   setup() {
     const authStore = useAuthStore();
 
@@ -35,15 +36,16 @@ export default {
     });
 
     const isAdminLogged = ref(authStore.isAdminLogged);
-
+console.log(isAdminLogged)
     return {
       isAdminLogged,
     };
   },
   methods: {
     logout() {
+      const authStore = useAuthStore();
       localStorage.clear();
-      useAuthStore.resetUserData();
+      authStore.resetUserData(); //NO FUNCiona
     }
   }
 };

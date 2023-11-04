@@ -5,11 +5,13 @@ export const useAuthStore = defineStore('auth', {
   state: () => reactive({
     isAdminLogged: false,
     isUserLogged: false,
-    userData: {}
+    isLoggedIn: false,
+    userData: {} || false
   }),
   actions: {
     setUserData(value) {
       this.userData = Object.assign({}, value);
+      this.isLoggedIn = true
       this.isAdminLogged = value.rol === '50yun4sm1n';
       this.isUserLogged = value.rol === "50yunu53r";
     },
@@ -19,12 +21,14 @@ export const useAuthStore = defineStore('auth', {
     setIsUserLogged(value) {
       this.isUserLogged = value;
     },
-  },
-  mutations: {
-    resetUserData() {
-      this.userData = {};
-      this.isAdminLogged = false;
-      this.isUserLogged = false;
+    setIsLoggedIn(value) {
+      this.isLoggedIn = value
     }
+  },
+    resetUserData() {
+      this.setUserData(false)
+      this.setIsAdminLogged(false)
+      this.setIsUserLogged(false)
+      this.setIsLoggedIn(false)
   }
 });

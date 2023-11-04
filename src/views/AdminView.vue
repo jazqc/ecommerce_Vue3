@@ -1,7 +1,7 @@
-<template>
+<template >
     <v-container fluid>
         <v-item-group>
-            <v-row dense justify="center">
+            <v-row dense justify="center" >
 
 <v-col
   v-for="item in items"
@@ -11,6 +11,7 @@
 md="4"
 lg="3"
 >
+
 <v-item>
     <v-card height="200px">
         <v-icon
@@ -46,6 +47,7 @@ lg="3"
       </v-card>
     </v-dialog>
 </v-item>
+
 </v-col>
 </v-row>
 

@@ -1,46 +1,54 @@
 <template>
     <v-form @submit.prevent="submitForm" class="justify-center">
-      <v-text-field v-model="formData.id" label="ID"></v-text-field>
-      <v-text-field v-model="formData.stock" label="Stock"></v-text-field>
-      <v-btn block type="submitForm" color="primary">Submit</v-btn>
+        <v-text-field v-model="formData.id" label="ID"></v-text-field>
+        <v-text-field v-model="formData.stock" label="Stock"></v-text-field>
+        <v-btn block type="submit" color="primary" @click="load">Submit</v-btn>
+        <br>
+        <v-progress-linear v-if="loading" indeterminate color="green"></v-progress-linear>
     </v-form>
-  </template>
+</template>
   
-  <script>
-  import { useAuthStore } from '../stores/store';
-  import axios from 'axios';
-  export default {
+<script>
+import { useAuthStore } from '../stores/store';
+import axios from 'axios';
+export default {
     data: () => ({
-
+        loading: false,
         formData: {
-    id: '',
-    stock: ''
+            id: '',
+            stock: ''
         }
     }),
     methods: {
-      submitForm() {
-        const store = useAuthStore();
-        const token = store.userData.token 
-        const headers = {
-        'x-token': token
-      };
+        load() {
+            this.loading = true;
+            setTimeout(() => {
+                this.loading = false;
+            }, 3000);
+        },
+        submitForm() {
+            const store = useAuthStore();
+            const token = store.userData.token
+            const headers = {
+                'x-token': token
+            };
 
-        console.log(this.formData);
-      const { id, stock} = this.formData
-      axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products/changeStock', this.formData, { headers })
-      .then((response) => {
-          console.log(response);
-          this.formData.id = '';
-          this.formData.stock = '';
+            console.log(this.formData);
+            const { id, stock } = this.formData
+            axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products/changeStock', this.formData, { headers })
+                .then((response) => {
+                    console.log(response);
+                    this.formData.id = '';
+                    this.formData.stock = '';
 
-        })
-        .catch((error) => {
-    console.error(error);
+                })
+                .catch((error) => {
+                    console.error(error);
 
-  });
-    },
-      }
+                });
+        },
     }
-  </script>
+}
+</script>
 
   //ACTUALIZAR TABLA!
