@@ -1,8 +1,7 @@
 <template>
-      <v-navigation-drawer
+      <!-- <v-navigation-drawer
         color="primary"
-        permanent
-      >
+      > -->
         <v-list>
           <v-list-item  title="Productos" to="/productos" ></v-list-item>
           <v-list-item  title="Nosotros" to="/about"></v-list-item>
@@ -10,14 +9,14 @@
           <v-list-item v-if="isAdminLogged" title="Administración" to="/adminPanel"></v-list-item>
         </v-list>
 
-        <template v-slot:append>
+        <template>
           <div class="pa-2">
             <v-btn block @click="logout">
               Logout
             </v-btn>
           </div>
         </template>
-      </v-navigation-drawer>
+      <!-- </v-navigation-drawer> -->
 </template>
 
 <script>
@@ -36,7 +35,6 @@ export default {
     });
 
     const isAdminLogged = ref(authStore.isAdminLogged);
-console.log(isAdminLogged)
     return {
       isAdminLogged,
     };

@@ -1,7 +1,7 @@
 <template>
-  <v-container class="hero">
-<v-title class="text-primary font-weight-bold text-center align-center text-h5 title-with-bg">In fringilla justo nec ante blandit dapibus. Aenean at varius dui.</v-title>
-</v-container>
+  <div class="hero">
+<v-title class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg">In fringilla justo nec ante blandit dapibus. Aenean at varius dui.</v-title>
+  </div>
     <v-container class="carousel">
       <v-carousel  cycle
     max-height="50em"
@@ -31,15 +31,16 @@
   background-image: url(../assets/2.jpg);
   background-position: center;
   background-size: cover;
-  height: 30%;
+  height: 30vh;
   width: 100%;
 }
 .carousel {
-  height: 50%;
+  height: 50vh;
   width: 100%;
 }
 .title-with-bg {
   background-color: #f8f8f8;
+  padding: 1rem;
 }
   </style>
   

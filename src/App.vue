@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <appBar></appBar>
-    <navBar></navBar>
+    <!-- <navBar></navBar> -->
     <v-main>
       <RouterView />
     </v-main>
@@ -18,7 +18,7 @@ import navBar from './components/navBar.vue';
 export default {
   components: {
     appBar,
-    navBar,
+    // navBar,
   },
   setup() {
     const store = useAuthStore();
@@ -41,4 +41,6 @@ export default {
 .bar {
   width: 100%;
 }
+
+
 </style>
