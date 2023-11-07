@@ -130,7 +130,7 @@ import editStockForm from '../components/editStockForm.vue';
     }
   };
   </script>
-  <style scoped>
+  <style>
 thead.header {
 font-size: 1.5em;
 }

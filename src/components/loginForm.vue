@@ -59,7 +59,6 @@ export default {
     visible: false,
     errors: [],
     loading: false,
-    // isLoggedIn: { state: false, rol: "" },
     formData: {
       email: '',
       password: '',
@@ -104,23 +103,6 @@ export default {
               const store = useAuthStore();
               store.setUserData(userData)
               this.$emit('login-successful');
-
-              // if (userData.rol === "50yun4sm1n") {
-              //   console.log("el user es admin")
-              //   this.isLoggedIn.rol = 'admin';
-              //   store.setIsAdminLogged(true); 
-              //   store.setIsUserLogged(false)
-              // } else {
-              //   console.log("el user no es admin")
-              //   this.isLoggedIn.rol = 'user';
-              //   store.setIsAdminLogged(false);
-              //   store.setIsUserLogged(true);
-              // }
-
-              
-              
-          // localStorage.setItem('userData', JSON.stringify(userData));
-          // userData.rol === "50yun4sm1n"? store.setIsAdminLogged(true): store.setIsUserLogged(true) 
         })
 
         .catch((error) => {
