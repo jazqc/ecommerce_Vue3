@@ -10,15 +10,14 @@
           <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
             Password
 
-            <a class="text-caption text-decoration-none text-blue" href="#" rel="noopener noreferrer"
-              target="_blank">
+            <a class="text-caption text-decoration-none text-blue" href="#" rel="noopener noreferrer" target="_blank">
               Forgot login password?</a>
           </div>
 
-          <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="visible ? 'text' : 'password'" density="compact" placeholder="Enter your password"
-            prepend-inner-icon="mdi-lock-outline" id="password" v-model="formData.password"
-            :rules="passwordRules" required @click:append-inner="visible = !visible"></v-text-field>
+          <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
+            density="compact" placeholder="Enter your password" prepend-inner-icon="mdi-lock-outline" id="password"
+            v-model="formData.password" :rules="passwordRules" required
+            @click:append-inner="visible = !visible"></v-text-field>
 
           <div v-if="errors.length > 0" class="text-red">
             <ul>
@@ -26,8 +25,9 @@
             </ul>
           </div>
 
-          <v-btn block class="mb-8" color="blue" size="large" variant="tonal" type="submit" :loading="loading" @click="load">
-              Log In
+          <v-btn block class="mb-8" color="blue" size="large" variant="tonal" type="submit" :loading="loading"
+            @click="load">
+            Log In
           </v-btn>
 
           <v-btn block class="mb-8 text-none text-subtitle-1" color="primary" size="large"
@@ -43,7 +43,6 @@
       </v-form>
     </v-card>
   </div>
-
 </template>
 
 <script>
@@ -75,11 +74,11 @@ export default {
   },
 
   methods: {
-    
-    load () {
-        this.loading = true
-        setTimeout(() => (this.loading = false), 3000)
-      },
+
+    load() {
+      this.loading = true
+      setTimeout(() => (this.loading = false), 3000)
+    },
     submit() {
       this.$refs.loginForm.validate().then(valid => {
         if (valid) {
@@ -89,35 +88,34 @@ export default {
               this.formData.email = '';
               this.formData.password = '';
 
-            const userData = {
-            name: response.data.user.name,
-            email: response.data.user.email,
-            rol: response.data.user.rol,
-            token: response.data.token
-          };
-          console.log(userData)
+              const userData = {
+                name: response.data.user.name,
+                email: response.data.user.email,
+                rol: response.data.user.rol,
+                token: response.data.token
+              };
+              console.log(userData)
 
-          localStorage.setItem('userData', JSON.stringify(userData));
+              localStorage.setItem('userData', JSON.stringify(userData));
               this.isLoading = false;
-
               const store = useAuthStore();
               store.setUserData(userData)
               this.$emit('login-successful');
-        })
+            })
 
-        .catch((error) => {
-          console.error(error);
-          if (error.response && error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
-          } else {
-            this.errors = [{ msg: 'Ha ocurrido un error, intentelo nuevamente' }];
+            .catch((error) => {
+              console.error(error);
+              if (error.response && error.response.data && error.response.data.errors) {
+                this.errors = error.response.data.errors;
+              } else {
+                this.errors = [{ msg: 'Ha ocurrido un error, intentelo nuevamente' }];
 
-          }
-        });
+              }
+            });
+        }
+      });
     }
-  });
+  }
 }
-  }
-  }
 
 </script>

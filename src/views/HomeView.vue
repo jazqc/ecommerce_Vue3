@@ -1,29 +1,28 @@
 <template>
   <div class="hero">
-<v-title class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg">In fringilla justo nec ante blandit dapibus. Aenean at varius dui.</v-title>
+    <v-title class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg">In fringilla justo
+      nec ante blandit dapibus. Aenean at varius dui.</v-title>
   </div>
-    <v-container class="carousel">
-      <v-carousel  cycle
-    max-height="50em"
-    hide-delimiter-background
-    show-arrows="hover">
-        <v-carousel-item v-for="product in products" :key="product.id" :src="product.img" d-flex justify-center align-center show-arrows="hover"></v-carousel-item>
-      </v-carousel>
-    </v-container>
-  </template>
+  <v-container class="carousel">
+    <v-carousel cycle max-height="50em" hide-delimiter-background show-arrows="hover">
+      <v-carousel-item v-for="product in products" :key="product.id" :src="product.img" d-flex justify-center align-center
+        show-arrows="hover"></v-carousel-item>
+    </v-carousel>
+  </v-container>
+</template>
   
-  <script setup>
-  import { ref } from 'vue';
+<script setup>
+import { ref } from 'vue';
+
+const products = ref([]);
+
+fetch('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
+  .then(response => response.json())
+  .then(data => products.value = data.data);
+
+</script>
   
-  const products = ref([]);
-  
-  fetch('http://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
-    .then(response => response.json())
-    .then(data => products.value = data.data);
-  
-  </script>
-  
-  <style scoped>
+<style scoped>
 .hero {
   display: flex;
   align-items: center;
@@ -34,13 +33,15 @@
   height: 30vh;
   width: 100%;
 }
+
 .carousel {
   height: 50vh;
   width: 100%;
 }
+
 .title-with-bg {
   background-color: #f8f8f8;
   padding: 1rem;
 }
-  </style>
+</style>
   

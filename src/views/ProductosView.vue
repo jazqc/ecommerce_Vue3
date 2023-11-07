@@ -48,7 +48,7 @@ export default {
     
     const products = ref([]);
 
-    fetch('http://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
+    fetch('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
       .then(response => response.json())
       .then(data => products.value = data.data)
     return { products }
