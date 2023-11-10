@@ -39,7 +39,7 @@
 
 <script>
 import { ref } from 'vue';
-
+import { useAuthStore } from '../stores/store';
 
 
 export default {
@@ -58,21 +58,19 @@ export default {
     
   }),
   methods: {
-    
-    add(product) {
-  const carritoString = localStorage.getItem("carrito");
-  const carrito = carritoString ? JSON.parse(carritoString) : [];
 
-  console.log(product);
-  const isInCarrito = carrito.find(({ product: { id } }) => id === product.id);
-  if (isInCarrito) {
-    const index = carrito.findIndex(({ product: { id } }) => id === product.id);
+add(product) {
+  const store = useAuthStore();
+  const carrito = store.carrito
+  const index = carrito.findIndex(({product: {id}}) => id === product.id);
+  if(index != -1) {
     carrito[index].quantity += 1;
   } else {
-        carrito.push( {product, quantity: 1} );
+    carrito.push({product, quantity: 1});
   }
+  store.setCarrito = carrito
   localStorage.setItem("carrito", JSON.stringify(carrito));
-  console.log(carrito)
+  console.log(store.carrito)
 }
     }
   }

@@ -35,9 +35,10 @@ const updateCarrito = () => {
   }
 };
 
-window.addEventListener("storage", updateCarrito);
 updateCarrito();
+
 </script>
+
 
 <style>
 .bar {

@@ -49,20 +49,34 @@
 </template>
 
 <script setup>
+import { onUpdated } from 'vue';
 import { useAuthStore } from '../stores/store';
 const store = useAuthStore()
-const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-console.log(store.carrito)
+const carrito = store.carrito || [];
 
 
 const deleteItem = (item) => {
     const index = carrito.findIndex(product => product.id === item.id);
     carrito.splice(index, 1)
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    console.log(carrito)
+    updateCarrito(carrito)
+
 }
 const decrement = (item) => {
-    console.log(item)
+    const index = carrito.findIndex(product => product.id === item.id);
+    if (carrito[index].quantity >1) {
+        carrito[index].quantity --
+        updateCarrito(carrito)
+    } 
+    else {
+        carrito.splice(index, 1)
+        updateCarrito(carrito)
+    }
+
+}
+function updateCarrito(carrito) {
+store.setCarrito = carrito
+localStorage.setItem("carrito", JSON.stringify(carrito));
+console.log(store.carrito)
 }
 </script>
 

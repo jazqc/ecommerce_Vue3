@@ -1,11 +1,10 @@
 <template>
-
-        <v-list>
-          <v-list-item  title="Productos" to="/productos" ></v-list-item>
-          <v-list-item  title="Nosotros" to="/about"></v-list-item>
-          <v-list-item  title="Contactanos" to="/contact"></v-list-item>
-          <v-list-item v-if="isAdminLogged" title="Administración" to="/adminPanel"></v-list-item>
-        </v-list>
+  <v-list>
+    <v-list-item title="Productos" to="/productos"></v-list-item>
+    <v-list-item title="Nosotros" to="/about"></v-list-item>
+    <v-list-item title="Contactanos" to="/contact"></v-list-item>
+    <v-list-item v-if="isAdminLogged" title="Administración" to="/adminPanel"></v-list-item>
+  </v-list>
 </template>
 
 <script>
@@ -15,7 +14,7 @@ import { ref } from 'vue';
 
 export default {
   name: 'navBar',
-  
+
   setup() {
     const authStore = useAuthStore();
 
@@ -35,5 +34,4 @@ export default {
 div.v-list-item-title {
   font-size: 1.5rem;
 }
-
 </style>
