@@ -68,16 +68,9 @@ const carritoLength = computed(() => store.carrito.length);
 
 watch(() => store.carrito, () => {
   return carritoLength.value = store.carrito.length;
-}); //no funciona
+}); 
 
 
-// watch(carrito, (newCarrito) => {
-//   localStorage.setItem("carrito", JSON.stringify(newCarrito));
-// });
-
-// watch(() => localStorage.getItem("carrito"), (newCarrito) => {
-//   carrito = JSON.parse(newCarrito || "[]");
-// });
 
 
 

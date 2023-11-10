@@ -8,6 +8,7 @@ import AdminView from '../views/AdminView.vue'
 import ComprasView from '../views/ComprasView.vue'
 import FavsView from '../views/FavsView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import OrderView from '../views/OrderView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: OrderView
     }
   ]
 })
