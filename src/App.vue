@@ -33,6 +33,9 @@ const updateCarrito = () => {
     store.setCarrito(parsedCarrito);
     console.log(store.carrito);
   }
+  else {
+    store.setCarrito([])
+  }
 };
 
 updateCarrito();

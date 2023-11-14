@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
     isUserLogged: false,
     isLoggedIn: false,
     userData: {} || false,
-    carrito: [],
+    carrito: []
   }),
   actions: {
     setUserData(value) {
@@ -27,14 +27,13 @@ export const useAuthStore = defineStore('auth', {
     },
     setCarrito(value) {
       this.carrito = value
-    }
-  },
-  mutations: { //NO FUNCIONA
+    },
     resetUserData() {
-      this.setUserData({})
-      this.setIsAdminLogged(false)
-      this.setIsUserLogged(false)
-      this.setIsLoggedIn(false)
+      this.setUserData.value = false;
+      this.setIsAdminLogged.value = false;
+      this.setIsUserLogged.value = false;
+      this.setIsLoggedIn.value =false;
+      console.log("deslogueado")
     }
   }
 });

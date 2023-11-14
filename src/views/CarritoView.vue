@@ -89,7 +89,7 @@ const decrement = (item) => {
 };
 
 function updateCarrito(carrito) {
-  store.setCarrito(carrito);
+  store.setCarrito = carrito
   localStorage.setItem("carrito", JSON.stringify(carrito));
   console.log(store.carrito);
 }

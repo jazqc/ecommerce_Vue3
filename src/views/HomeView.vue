@@ -1,6 +1,6 @@
 <template>
   <div class="hero">
-    <v-title class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg">In fringilla justo
+    <v-title class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg" primary>In fringilla justo
       nec ante blandit dapibus. Aenean at varius dui.</v-title>
   </div>
   <v-container class="carousel">
@@ -42,6 +42,7 @@ fetch('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
 .title-with-bg {
   background-color: #f8f8f8;
   padding: 1rem;
+  color: #6F6D71;
 }
 </style>
   

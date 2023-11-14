@@ -11,9 +11,8 @@
               <v-img :src="product.img" class="align-end card-image mx-auto"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" cover>
               </v-img>
-              <v-card-title
-                class="text-deep-purple-darken-4 font-weight-bold text-center">{{ product.title }}</v-card-title>
-              <v-card-subtitle class="text-h6 text-black font-weight-bold text-center">${{ product.price
+              <v-card-title class="title">{{ product.title }}</v-card-title>
+              <v-card-subtitle class="subtitle">${{ product.price
               }}</v-card-subtitle>
 
 
@@ -21,8 +20,6 @@
                 <v-spacer></v-spacer>
 
                 <v-btn :icon="isSelected ? 'mdi-heart' : 'mdi-heart-outline'" @click="toggle"></v-btn>
-
-                <v-btn size="large" color="surface-variant" variant="text" icon="mdi-bookmark"></v-btn>
 
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-cart-plus" @click="add(product)"></v-btn>
@@ -68,7 +65,7 @@ add(product) {
   } else {
     carrito.push({product, quantity: 1});
   }
-  store.setCarrito = carrito
+  store.setCarrito = carrito.value
   localStorage.setItem("carrito", JSON.stringify(carrito));
   console.log(store.carrito)
 }
@@ -87,5 +84,14 @@ add(product) {
 
 icon.mdi-heart-outline {
   color: red;
+}
+div.v-card-title.title{
+
+ font-weight: bold;
+}
+div.v-card-subtitle.subtitle {
+  font-size: 1.5em;
+  font-weight: bold;
+
 }
 </style>

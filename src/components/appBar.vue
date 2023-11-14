@@ -63,16 +63,15 @@ const items = computed(() => [
 const filteredItems = computed(() => {
   return items.value.filter(item => item.condition);
 })
-const carritoLength = computed(() => store.carrito.length);
+// watch(() => store.userData, () => {
+//   return filteredItems
+// }); VER ESTO PARA Q SE ACTUALICE CON EL LOGOUT
 
+const carritoLength = computed(() => store.carrito.length);
 
 watch(() => store.carrito, () => {
   return carritoLength.value = store.carrito.length;
 }); 
-
-
-
-
 
 const clicked = (item) => {
   if (item.id === 1) {
@@ -81,6 +80,7 @@ const clicked = (item) => {
   else if (item.id === 5) {
     localStorage.clear();
     store.resetUserData();  //ARREGLAR
+    console.log("deslogueado")
   }
   else {
     router.push(item.path)

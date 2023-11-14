@@ -14,11 +14,12 @@ import colors from 'vuetify/lib/util/colors'
 const myLightTheme = {
   dark: false,
   colors: {
-    primary: '#34495E',
-    primarySh: '#34495E',
+    primary: '#805C95',
+    primarySh: '#805C95',
     secondary: '#E1BEE7',
     complementary: '#85CE78',
-    whiteSoft: '#f8f8f8'
+    whiteSoft: '#f8f8f8',
+    text: '#555456'
   },
 }
 
