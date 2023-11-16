@@ -72,6 +72,9 @@
      }
    },
    submit() {
+    if (!this.$refs.form.validate()) {
+     return;
+    }
      const store = useAuthStore();
      const carrito = store.carrito;
  

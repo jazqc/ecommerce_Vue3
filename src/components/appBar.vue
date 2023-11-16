@@ -67,7 +67,9 @@ const filteredItems = computed(() => {
 //   return filteredItems
 // }); VER ESTO PARA Q SE ACTUALICE CON EL LOGOUT
 
-const carritoLength = computed(() => store.carrito.length);
+const carritoLength = computed(() => {
+ return store && store.carrito ? store.carrito.length : 0;
+});
 
 watch(() => store.carrito, () => {
   return carritoLength.value = store.carrito.length;
