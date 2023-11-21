@@ -5,11 +5,22 @@
     :key= "index"
   >
   <v-list-subheader></v-list-subheader>
+  <template v-slot:prepend>
+              <v-icon icon="mdi-shopping-outline"></v-icon>
+            </template>
 <v-list-item-title>Fecha de compra: {{ order.createdAt }}</v-list-item-title>
 <v-list-item-subtitle>{{order.status}}</v-list-item-subtitle>
 <v-list-item-subtitle>Total ${{ order.totalCost }}</v-list-item-subtitle>
 <div v-for="(item, itemIndex) in order.items" :key="itemIndex">
+  <v-list-item>
+  <template v-slot:prepend>
+
+            <v-icon icon="mdi-star-circle"></v-icon>
+
+        </template>
+
 <v-list-item-subtitle>{{ item.title }}</v-list-item-subtitle>
+</v-list-item>
 </div>
 <v-divider></v-divider>
 <div></div>

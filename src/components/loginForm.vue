@@ -19,13 +19,18 @@
             v-model="formData.password" :rules="passwordRules" required
             @click:append-inner="visible = !visible"></v-text-field>
 
-          <div v-if="errors.length > 0" class="text-red">
-            <ul>
-              <li v-for="error in errors" :key="error.msg">{{ error.msg }}</li>
-            </ul>
+          <div v-if="error">
+
+            <v-alert
+  color="error"
+  variant="tonal"
+  icon="$error"
+  text="Alguno de los datos es incorrecto">
+
+</v-alert>
           </div>
 
-          <v-btn block class="mb-8" color="blue" size="large" variant="tonal" type="submit" :loading="loading"
+          <v-btn block class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="loading"
             @click="load">
             Log In
           </v-btn>
@@ -57,6 +62,7 @@ export default {
     showLoginForm: true,
     visible: false,
     errors: [],
+    error: false,
     loading: false,
     formData: {
       email: '',
@@ -107,6 +113,9 @@ export default {
               console.error(error);
               if (error.response && error.response.data && error.response.data.errors) {
                 this.errors = error.response.data.errors;
+                this.error = true,
+                console.log(this.errors)
+
               } else {
                 this.errors = [{ msg: 'Ha ocurrido un error, intentelo nuevamente' }];
 
