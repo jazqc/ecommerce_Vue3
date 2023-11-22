@@ -6,7 +6,6 @@ import ProductosView from '../views/ProductosView.vue'
 import CarritoView from '../views/CarritoView.vue'
 import AdminView from '../views/AdminView.vue'
 import ComprasView from '../views/ComprasView.vue'
-import FavsView from '../views/FavsView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import OrderView from '../views/OrderView.vue'
 
@@ -47,11 +46,6 @@ const router = createRouter({
       path: '/compras',
       name: 'compras',
       component: ComprasView
-    },
-    {
-      path: '/favs',
-      name: 'favoritos',
-      component: FavsView
     },
     {
       path: '/profile',

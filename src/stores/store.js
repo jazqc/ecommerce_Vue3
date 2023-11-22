@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
     isUserLogged: false,
     isLoggedIn: false,
     userData: {} || false,
-    carrito: []
+    carrito: [],
   }),
   actions: {
     setUserData(value) {
