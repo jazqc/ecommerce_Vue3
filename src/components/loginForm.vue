@@ -19,15 +19,11 @@
             v-model="formData.password" :rules="passwordRules" required
             @click:append-inner="visible = !visible"></v-text-field>
 
-          <div v-if="error">
+          <div v-if="error" class="text-red">
 
-            <v-alert
-  color="error"
-  variant="tonal"
-  icon="$error"
-  text="Alguno de los datos es incorrecto">
+            <v-alert color="error" variant="tonal" icon="$error" text="Alguno de los datos es incorrecto">
 
-</v-alert>
+            </v-alert>
           </div>
 
           <v-btn block class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="loading"
@@ -61,8 +57,10 @@ export default {
     showSignUpForm: false,
     showLoginForm: true,
     visible: false,
-    errors: [],
-    error: false,
+    errors: {
+      data: [],
+      satus: false,
+    },
     loading: false,
     formData: {
       email: '',
@@ -90,7 +88,6 @@ export default {
         if (valid) {
           axios.post('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/auth/login', this.formData)
             .then((response) => {
-              console.log(response);
               this.formData.email = '';
               this.formData.password = '';
 
@@ -100,26 +97,25 @@ export default {
                 rol: response.data.user.rol,
                 token: response.data.token
               };
-              console.log(userData)
 
               localStorage.setItem('userData', JSON.stringify(userData));
-              this.isLoading = false;
               const store = useAuthStore();
               store.setUserData(userData)
               this.$emit('login-successful');
             })
 
             .catch((error) => {
-              console.error(error);
               if (error.response && error.response.data && error.response.data.errors) {
-                this.errors = error.response.data.errors;
-                this.error = true,
+                this.errors = { data: error.response.data.errors, satus: true }
                 console.log(this.errors)
 
               } else {
                 this.errors = [{ msg: 'Ha ocurrido un error, intentelo nuevamente' }];
 
               }
+            })
+            .finally(() => {
+              this.loading = false;
             });
         }
       });

@@ -3,28 +3,28 @@
     <v-form @submit.prevent="submit">
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field variant="underlined" v-model="formData.name" :rules="required"
+          <v-text-field variant="underlined" v-model="formData.name" :rules="[rules.required]"
             label="Nombre y apellido"></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field variant="underlined" v-model="formData.cellphone" :rules="required"
+          <v-text-field variant="underlined" v-model="formData.cellphone" :rules="[rules.required]"
             label="Número de celular"></v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field variant="underlined" v-model="formData.adress" :rules="required"
+          <v-text-field variant="underlined" v-model="formData.adress" :rules="[rules.required]"
             label="Dirección de envio"></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field variant="underlined" v-model="formData.location" :rules="required"
+          <v-text-field variant="underlined" v-model="formData.location" :rules="[rules.required]"
             label="Localidad"></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field variant="underlined" :rules="required" v-model="code" label="código postal"></v-text-field>
+          <v-text-field variant="underlined"  v-model="code" :rules="[rules.required]" label="código postal" ></v-text-field>
         </v-col>
         <v-col>
           <p>Costo de envío: ${{ shippingCost }}</p>
@@ -36,6 +36,11 @@
       <v-progress-linear v-if="loading" indeterminate color="green"></v-progress-linear>
     </v-form>
   </v-container>
+  <div v-if="success">
+
+<v-alert color="success" variant="tonal" icon="$success" text="Compra realizada con éxito, puede hacer el seguimiento desde 'Mis compras' ">
+</v-alert>
+</div>
 </template>
 
  
@@ -53,16 +58,16 @@
        adress: '',
        location: '',
      },
+     rules: {
+            required: value => !!value || 'Campo requerido',
+     },
      code: '',
      shippingCost: 0,
      loading: false,
+     success: false,
    };
   },
-  computed: {
-   required() {
-     return [(value) => !!value || 'Campo requerido'];
-   },
-  },
+
   methods: {
    calculateShippingCost() {
      if (this.code > 999 && this.code < 1500) {
@@ -72,9 +77,6 @@
      }
    },
    submit() {
-    if (!this.$refs.form.validate()) {
-     return;
-    }
      const store = useAuthStore();
      const carrito = store.carrito;
  
@@ -82,7 +84,7 @@
      const headers = {
        'x-token':token
      };
-     console.log(headers)
+  
      const items = carrito.map(item => {
        return {
          desc: item.product.desc,
@@ -119,11 +121,10 @@
        this.formData.location = "";
        this.shippingCost = 0;
        this.code = '',
-       store.setCarrito = [];
-       Swal.fire({
-  icon: 'success',
-  title: 'Compra realizada con éxito!',
-});
+       store.carrito = [];
+       localStorage.removeItem("carrito");
+       this.success = true;
+       setTimeout(() => { this.success = false; }, 3000);
      })
      .catch((error) => {
        console.error(error);

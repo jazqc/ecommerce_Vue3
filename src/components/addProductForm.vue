@@ -1,14 +1,14 @@
 <template>
     <v-form @submit.prevent="submitForm" class="justify-center">
-        <v-text-field v-model="formData.id" label="ID"></v-text-field>
-        <v-text-field v-model="formData.title" label="Title"></v-text-field>
-        <v-text-field v-model="formData.desc" label="Description"></v-text-field>
-        <v-text-field v-model="formData.img" label="Image URL"></v-text-field>
-        <v-text-field v-model="formData.price" label="Price"></v-text-field>
-        <v-text-field v-model="formData.stock" label="Stock"></v-text-field>
+        <v-text-field v-model="formData.id" label="ID" :rules="[rules.required]"></v-text-field>
+        <v-text-field v-model="formData.title" label="Title" :rules="[rules.required]"></v-text-field>
+        <v-text-field v-model="formData.desc" label="Description" :rules="[rules.required]"></v-text-field>
+        <v-text-field v-model="formData.img" label="Image URL" :rules="[rules.required]"></v-text-field>
+        <v-text-field v-model="formData.price" label="Price" :rules="[rules.required]"></v-text-field>
+        <v-text-field v-model="formData.stock" label="Stock" :rules="[rules.required]"></v-text-field>
         <v-btn block type="submit" color="primary" @click="load">Submit</v-btn>
         <br>
-        <v-progress-linear v-if="loading" indeterminate color="green"></v-progress-linear>
+        <v-progress-linear v-if="isLoading" indeterminate color="green"></v-progress-linear>
 
     </v-form>
 </template>
@@ -19,7 +19,7 @@ import axios from 'axios';
 export default {
 
     data: () => ({
-        loading: false,
+        isLoading: false,
         formData: {
             id: '',
             title: '',
@@ -27,15 +27,15 @@ export default {
             img: '',
             price: '',
             stock: ''
-        }
+        },
+        rules: {
+            required: value => !!value || 'Campo requerido',
+        },
     }),
 
     methods: {
         load() {
             this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-            }, 3000);
         },
         submitForm() {
             const store = useAuthStore();
@@ -59,6 +59,9 @@ export default {
                 .catch((error) => {
                     console.error(error);
 
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
         },
     }

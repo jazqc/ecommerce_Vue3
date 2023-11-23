@@ -62,9 +62,9 @@ const items = computed(() => [
 const filteredItems = computed(() => {
   return items.value.filter(item => item.condition);
 })
-// watch(() => store.userData, () => {
-//   return filteredItems
-// }); VER ESTO PARA Q SE ACTUALICE CON EL LOGOUT
+watch(() => store.userData, () => {
+  return filteredItems
+});
 
 const carritoLength = computed(() => {
  return store && store.carrito ? store.carrito.length : 0;

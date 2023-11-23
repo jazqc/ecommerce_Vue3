@@ -8,7 +8,7 @@
 
         <v-btn block type="submit" color="primary" @click="load">Submit</v-btn>
         <br>
-        <v-progress-linear v-if="loading" indeterminate color="green"></v-progress-linear>
+        <v-progress-linear v-if="isLoading" indeterminate color="green"></v-progress-linear>
 
     </v-form>
 </template>
@@ -19,24 +19,22 @@ import axios from 'axios';
 export default {
 
     data: () => ({
-        rules: {
-            required: value => !!value || 'El ID es requerido',
-        },
-        loading: false,
+
+        isLoading: false,
         formData: {
             id: '',
             title: '',
             desc: '',
             img: '',
             price: '',
-        }
+        },
+        rules: {
+            required: value => !!value || 'El ID es requerido',
+        },
     }),
     methods: {
         load() {
-            this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-            }, 3000);
+            this.isLoading = true;
         },
         submitForm() {
             const store = useAuthStore();
@@ -66,7 +64,7 @@ export default {
 
                 })
                 .finally(() => {
-                    this.loading = false;
+                    this.isLoading = false;
                 });
         },
     }

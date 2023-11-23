@@ -9,8 +9,8 @@
     </div>
     <v-item-group v-model="selection" multiple>
       <v-row dense>
-        <v-col v-for="product in filteredProducts" :key="product._id" align="center" sm="6" md="4" lg="3">
-          <v-item v-slot="{ isSelected, toggle }">
+        <v-col v-for="product in filteredProducts" :key="product.id" align="center" sm="6" md="4" lg="3">
+          <v-item v-slot="{ toggle }">
             <v-card align="center">
               <v-img :src="product.img" class="align-end card-image mx-auto"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" cover>
@@ -19,7 +19,7 @@
               <v-card-subtitle class="subtitle">${{ product.price }}</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn :icon="isSelected ? 'mdi-heart' : 'mdi-heart-outline'" @click="addFav(product, toggle)"></v-btn>
+                <v-btn :icon="isInFavs(product) ? 'mdi-heart' : 'mdi-heart-outline'" @click="addFav(product, toggle)"></v-btn>
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-cart-plus"
                   @click="add(product)"></v-btn>
@@ -37,39 +37,50 @@ import { computed, ref, watch } from 'vue';
 import { useAuthStore } from '../stores/store';
 import axios from 'axios';
 
-export default {
-  setup() {
-    const products = ref([]);
-    const errorMsg = ref(false);
-    const store = useAuthStore();
-    const favsProducts = ref([]);
-    const filter = ref('');
+  export default {
+ setup() {
+   const products = ref([]);
+   const errorMsg = ref(false);
+   const store = useAuthStore();
+   const favsProducts = ref([]);
+   const filter = ref('');
 
-    axios.get('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
-      .then(response => {
-        products.value = response.data.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
 
-    watch(() => filter.value, (newValue) => {
-      if (newValue === 'Mis favoritos') {
-        const headers = {
-          'x-token': store.userData.token
-        };
-        axios.get('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/favs', { headers })
-          .then(response => {
-            favsProducts.value = response.data.data;
-          })
-          .catch(error => {
-            console.error(error);
-          });
+   axios.get('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
+     .then(response => {
+       products.value = response.data.data;
+     })
+     .catch(error => {
+       console.error(error);
+     });
+   const getFavs = () => {
+    if(store.isLoggedIn) {
+      const headers = {
+     'x-token': store.userData.token
+   };
+     axios.get('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/favs', { headers })
+       .then(response => {
+         favsProducts.value = response.data.data;
+       })
+       .catch(error => {
+         console.error(error);
+       });
       }
-    });
+   };
+  
+   watch(() => filter.value, (newValue) => {
+     if (newValue === 'Mis favoritos') {
+       getFavs();
+     }
+   });
+   getFavs();
+  const isInFavs = (product) => {
 
-    return { products, errorMsg, store, favsProducts, filter }
-  },
+ return favsProducts.value.some(favProduct => favProduct.id === product.id);
+ };
+
+   return { products, errorMsg, store, favsProducts, filter, getFavs, isInFavs}
+ },
 
   data: () => ({
     selection: [],
@@ -107,9 +118,9 @@ export default {
             setTimeout(() => { this.errorMsg = false; }, 3000);
           }
         })
-    }
+    },
   },
-  
+
   computed: {
     filteredProducts() {
       if (this.filter === 'Mis favoritos') {
@@ -117,7 +128,7 @@ export default {
       } else {
         return this.products;
       }
-    }
+    },
   }
 }
 </script>

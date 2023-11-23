@@ -1,10 +1,10 @@
 <template>
     <v-form @submit.prevent="submitForm" class="justify-center">
-        <v-text-field v-model="formData.id" label="ID"></v-text-field>
-        <v-text-field v-model="formData.stock" label="Stock"></v-text-field>
+        <v-text-field v-model="formData.id" label="ID" :rules="[idRules.required]"></v-text-field>
+        <v-text-field v-model="formData.stock" label="Stock" :rules="[stockRules.number]"></v-text-field>
         <v-btn block type="submit" color="primary" @click="load">Submit</v-btn>
         <br>
-        <v-progress-linear v-if="loading" indeterminate color="green"></v-progress-linear>
+        <v-progress-linear v-if="isLoading" indeterminate color="green"></v-progress-linear>
     </v-form>
 </template>
   
@@ -13,18 +13,24 @@ import { useAuthStore } from '../stores/store';
 import axios from 'axios';
 export default {
     data: () => ({
-        loading: false,
+        isLoading: false,
         formData: {
             id: '',
             stock: ''
+        },
+        idRules:
+        {
+            required: value => !!value || 'Debe ingresar el ID'
+        },
+        stockRules:
+        {
+            number: value => !isNaN(value) || 'Debe ingresar un valor numerico'
         }
+
     }),
     methods: {
         load() {
-            this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-            }, 3000);
+            this.isLoading = true;
         },
         submitForm() {
             const store = useAuthStore();
@@ -32,8 +38,6 @@ export default {
             const headers = {
                 'x-token': token
             };
-
-            console.log(this.formData);
             const { id, stock } = this.formData
             axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products/changeStock', this.formData, { headers })
                 .then((response) => {
@@ -45,10 +49,11 @@ export default {
                 .catch((error) => {
                     console.error(error);
 
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
         },
     }
 }
 </script>
-
-  //ACTUALIZAR TABLA!
