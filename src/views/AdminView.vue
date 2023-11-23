@@ -125,7 +125,6 @@ import editStockForm from '../components/editStockForm.vue';
 
       },
       submitForm() {
-        // Handle form submission logic
         this.formDialog = false;
       }
     }
