@@ -10,7 +10,7 @@
     <v-item-group v-model="selection" multiple>
       <v-row dense>
         <v-col v-for="product in filteredProducts" :key="product.id" align="center" sm="6" md="4" lg="3">
-          <v-item v-slot="{ toggle }">
+          <v-item>
             <v-card align="center">
               <v-img :src="product.img" class="align-end card-image mx-auto"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" cover>
@@ -19,9 +19,9 @@
               <v-card-subtitle class="subtitle">${{ product.price }}</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn  v-if="store.isLoggedIn" :icon="isInFavs(product) ? 'mdi-heart' : 'mdi-heart-outline'" @click="addFav(product, toggle)"></v-btn>
+                <v-btn  v-if="store.isLoggedIn" :icon="isInFavs(product) ? 'mdi-heart' : 'mdi-heart-outline'" @click="addFav(product)"></v-btn>
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
-                <v-btn size="large" color="surface-variant" variant="text" icon="mdi-cart-plus"
+                <v-btn v-if="store.isLoggedIn" size="large" color="surface-variant" variant="text" icon="mdi-cart-plus"
                   @click="add(product)"></v-btn>
               </v-card-actions>
             </v-card>
@@ -110,8 +110,8 @@ import axios from 'axios';
       };
       axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/favs', { products: product.id }, { headers })
         .then(response => {
-          toggle()
           console.log(response)
+          this.getFavs()
         })
         .catch(error => {
           console.error(error)
