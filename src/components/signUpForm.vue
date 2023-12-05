@@ -3,7 +3,8 @@
     <v-form @submit.prevent="submit" v-if="showSignUpForm">
       <div class="text-subtitle-1 text-medium-emphasis custom-form">Nombre</div>
 
-      <v-text-field density="compact" placeholder="nombre" id="name" v-model="formData.name" :rules="nameRules" required></v-text-field>
+      <v-text-field density="compact" placeholder="nombre" id="name" v-model="formData.name" :rules="nameRules"
+        required></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis">Email</div>
       <v-text-field density="compact" placeholder="Email address" prepend-inner-icon="mdi-email-outline" id="email"
@@ -15,7 +16,8 @@
 
       <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
         density="compact" placeholder="Enter your password" prepend-inner-icon="mdi-lock-outline" id="password"
-        v-model="formData.password" :rules="passwordRules" required @click:append-inner="visible = !visible"></v-text-field>
+        v-model="formData.password" :rules="passwordRules" required
+        @click:append-inner="visible = !visible"></v-text-field>
 
       <v-btn block class="mb-8" color="primary" size="large" variant="tonal" type="submit">
         <template v-if="isLoading">
@@ -28,7 +30,6 @@
       <div v-if="error">
 
         <v-alert color="error" variant="tonal" icon="$error" text="Alguno de los datos es incorrecto">
-
         </v-alert>
       </div>
     </v-form>
@@ -58,7 +59,7 @@ export default {
       password: '',
     },
     nameRules: [
-    value => !!value || 'Debe ingresar su nombre'
+      value => !!value || 'Debe ingresar su nombre'
     ],
     emailRules: [
       value => !!value || 'Debe ingresar un correo electrónico'
@@ -72,22 +73,22 @@ export default {
     submit() {
       this.isLoading = true;
       const { name, email, password } = this.formData
-      axios.post('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/auth/register', this.formData)
+      axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/auth/register', this.formData)
         .then((response) => {
-          console.log(response);
           this.formData.name = '';
           this.formData.email = '';
           this.formData.password = '';
           this.isLoading = false;
           this.showSignUpForm = false;
           this.userCode = true
-          this.isLoading = false;
         })
         .catch((error) => {
           console.error(error);
           this.error = true
-          this.isLoading = false;
 
+        })
+        .finally(() => {
+          this.isloading = false;
         });
     },
 

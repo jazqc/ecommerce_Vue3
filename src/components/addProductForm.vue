@@ -45,7 +45,7 @@ export default {
             };
 
             const { id, title, desc, img, price, stock } = this.formData
-            axios.post('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products', this.formData, { headers })
+            axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products', this.formData, { headers })
                 .then((response) => {
                     console.log(response);
                     this.formData.id = '';

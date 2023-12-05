@@ -16,7 +16,7 @@ import { ref } from 'vue';
 
 const products = ref([]);
 
-fetch('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
+fetch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products')
   .then(response => response.json())
   .then(data => products.value = data.data);
 

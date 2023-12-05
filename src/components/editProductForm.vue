@@ -49,7 +49,7 @@ export default {
                 }
             }
 
-            axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products/changeProduct', editedFields, { headers })
+            axios.patch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products/changeProduct', editedFields, { headers })
                 .then((response) => {
                     console.log(response);
                     this.formData.id = '';

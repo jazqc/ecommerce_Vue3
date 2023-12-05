@@ -39,7 +39,7 @@ export default {
                 'x-token': token
             };
             const { id, stock } = this.formData
-            axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/products/changeStock', this.formData, { headers })
+            axios.patch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products/changeStock', this.formData, { headers })
                 .then((response) => {
                     console.log(response);
                     this.formData.id = '';

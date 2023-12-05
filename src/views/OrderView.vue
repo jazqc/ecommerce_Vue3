@@ -101,7 +101,7 @@
        total += item.price * item.quantity;
      }
      const totalCost = total + this.shippingCost
-     axios.post('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/orders', {
+     axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/orders', {
        totalPrice: total,
        shippingCost: this.shippingCost,
        shippingDetails: {

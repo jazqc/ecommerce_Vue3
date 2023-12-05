@@ -1,6 +1,9 @@
-<template>
-  <div>
-    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+<template v-slot:icon>
+
+    <v-card class="mx-auto pa-8 pb-8" elevation="8" max-width="448" rounded="lg">
+      <div class="text-right">
+    <v-icon icon="mdi-close-circle-outline" color="primary" @click="this.$emit('close-dialog')"></v-icon>
+  </div>
       <div v-if="showLoginForm">
         <div class="text-subtitle-1 text-medium-emphasis">Account</div>
         <v-form ref="loginForm" @submit.prevent="submit">
@@ -19,7 +22,7 @@
             v-model="formData.password" :rules="passwordRules" required
             @click:append-inner="visible = !visible"></v-text-field>
 
-          <div v-if="error" class="text-red">
+          <div v-if="errors.satus === true" class="text-red">
 
             <v-alert color="error" variant="tonal" icon="$error" text="Alguno de los datos es incorrecto">
 
@@ -43,7 +46,6 @@
         <signUpForm></signUpForm>
       </v-form>
     </v-card>
-  </div>
 </template>
 
 <script>
@@ -86,7 +88,7 @@ export default {
     submit() {
       this.$refs.loginForm.validate().then(valid => {
         if (valid) {
-          axios.post('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/auth/login', this.formData)
+          axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/auth/login', this.formData)
             .then((response) => {
               this.formData.email = '';
               this.formData.password = '';
@@ -101,7 +103,7 @@ export default {
               localStorage.setItem('userData', JSON.stringify(userData));
               const store = useAuthStore();
               store.setUserData(userData)
-              this.$emit('login-successful');
+              this.$emit('close-dialog');
             })
 
             .catch((error) => {

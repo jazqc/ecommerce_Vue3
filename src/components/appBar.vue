@@ -27,8 +27,10 @@
           </v-list>
 
         </v-menu>
-        <v-dialog v-model="showDialog" width="auto">
-          <loginForm @login-successful="showDialog = false"></loginForm>
+        <v-dialog v-model="showDialog" width="auto" persistent class="dialog">
+          <loginForm @close-dialog="showDialog = false"> //cambiarle el nombre a close-dialog as[i uso el icono para cerrar desde cualquier componente con esa funcion]
+          </loginForm>
+
         </v-dialog>
       </template>
     </v-app-bar>
@@ -63,7 +65,7 @@ const filteredItems = computed(() => {
   return items.value.filter(item => item.condition);
 })
 watch(() => store.userData, () => {
-  return filteredItems
+ filteredItems.value = items.value.filter(item => item.condition);
 });
 
 const carritoLength = computed(() => {
@@ -81,7 +83,6 @@ const clicked = (item) => {
   else if (item.id === 5) {
     localStorage.clear();
     store.resetUserData();  //ARREGLAR
-    console.log("deslogueado")
   }
   else {
     router.push(item.path)
@@ -99,6 +100,7 @@ const toCarrito = () => {
 div.app-bar-nav-icon {
   size: 3rem;
 }
+
 a.router-link, .v-app-bar-title{
   color: #f8f8f8;
   text-decoration: none;

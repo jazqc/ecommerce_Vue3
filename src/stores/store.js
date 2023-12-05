@@ -29,10 +29,10 @@ export const useAuthStore = defineStore('auth', {
       this.carrito = value
     },
     resetUserData() {
-      this.setUserData.value = false;
-      this.setIsAdminLogged.value = false;
-      this.setIsUserLogged.value = false;
-      this.setIsLoggedIn.value =false;
+      this.setUserData({});
+      this.setIsAdminLogged(false);
+      this.setIsUserLogged(false);
+      this.setIsLoggedIn(false);
       console.log("deslogueado")
     }
   }

@@ -30,11 +30,13 @@
       v-if="error"
   color="error"
   icon="$error"
+  variant="tonal"
 >{{ errorMsgText }}</v-alert>
 <v-alert
       v-if="success"
   color="success"
   icon="$success"
+  variant="tonal"
   text="Su usuario ha sido verificado"
 ></v-alert>
     </v-form>
@@ -61,7 +63,7 @@ export default {
   submitCode() {
     this.isLoading= true;
     const { email, code} = this.formDataCode
-    axios.patch('https://back-ecommerce-apdo8p7v1-jazqc.vercel.app/auth/verify', this.formDataCode)
+    axios.patch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/auth/verify', this.formDataCode)
       .then((response) => {
           console.log("ok")
           this.success = true;

@@ -19,7 +19,7 @@
               <v-card-subtitle class="subtitle">${{ product.price }}</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn :icon="isInFavs(product) ? 'mdi-heart' : 'mdi-heart-outline'" @click="addFav(product, toggle)"></v-btn>
+                <v-btn  v-if="store.isLoggedIn" :icon="isInFavs(product) ? 'mdi-heart' : 'mdi-heart-outline'" @click="addFav(product, toggle)"></v-btn>
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
                 <v-btn size="large" color="surface-variant" variant="text" icon="mdi-cart-plus"
                   @click="add(product)"></v-btn>
@@ -46,19 +46,20 @@ import axios from 'axios';
    const filter = ref('');
 
 
-   axios.get('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/products')
+   axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products')
      .then(response => {
        products.value = response.data.data;
      })
      .catch(error => {
        console.error(error);
      });
+
    const getFavs = () => {
     if(store.isLoggedIn) {
       const headers = {
      'x-token': store.userData.token
    };
-     axios.get('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/favs', { headers })
+     axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/favs', { headers })
        .then(response => {
          favsProducts.value = response.data.data;
        })
@@ -73,6 +74,7 @@ import axios from 'axios';
        getFavs();
      }
    });
+   
    getFavs();
   const isInFavs = (product) => {
 
@@ -106,7 +108,7 @@ import axios from 'axios';
       const headers = {
         'x-token': token
       };
-      axios.post('https://back-ecommerce-1wni1lbxi-jazqc.vercel.app/favs', { products: product.id }, { headers })
+      axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/favs', { products: product.id }, { headers })
         .then(response => {
           toggle()
           console.log(response)
