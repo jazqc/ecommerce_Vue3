@@ -24,7 +24,7 @@
 
           <div v-if="errors.satus === true" class="text-red">
 
-            <v-alert color="error" variant="tonal" icon="$error" text="Alguno de los datos es incorrecto">
+            <v-alert class="custom-alert" color="error" variant="tonal" icon="$error">{{ errors.msg }}
 
             </v-alert>
           </div>
@@ -62,6 +62,7 @@ export default {
     errors: {
       data: [],
       satus: false,
+      msg: ''
     },
     loading: false,
     formData: {
@@ -107,9 +108,10 @@ export default {
             })
 
             .catch((error) => {
-              if (error.response && error.response.data && error.response.data.errors) {
-                this.errors = { data: error.response.data.errors, satus: true }
-                console.log(this.errors)
+              if (error) {
+                this.errors = { data: error.response.data.errors, satus: true, msg: error.response.data.msg ? error.response.data.msg : 'Hay errores en el formulario, verifique sus datos'   }
+                // console.log(this.errors)
+                console.log(error.response.data.msg)
 
               } else {
                 this.errors = [{ msg: 'Ha ocurrido un error, intentelo nuevamente' }];
@@ -126,3 +128,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.custom-alert {
+ font-size: 14px;
+}
+</style>

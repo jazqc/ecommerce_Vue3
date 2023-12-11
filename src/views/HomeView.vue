@@ -13,12 +13,17 @@
   
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const products = ref([]);
 
-fetch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products')
-  .then(response => response.json())
-  .then(data => products.value = data.data);
+axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products')
+     .then(response => {
+       products.value = response.data.data;
+     })
+     .catch(error => {
+       console.error(error);
+     });
 
 </script>
   

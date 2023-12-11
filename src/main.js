@@ -9,7 +9,7 @@ import * as directives from 'vuetify/directives'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import { aliases, md } from 'vuetify/iconsets/md'
 import colors from 'vuetify/lib/util/colors'
-
+import { VDataTable } from 'vuetify/labs/VDataTable'
 
 const myLightTheme = {
   dark: false,
@@ -25,7 +25,7 @@ const myLightTheme = {
 
 
 const vuetify = createVuetify({
-  components,
+  components: { ...components, VDataTable },
   directives,
   theme: {
     defaultTheme: 'myLightTheme',
