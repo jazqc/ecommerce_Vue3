@@ -18,7 +18,7 @@ import axios from 'axios';
 const products = ref([]);
 const URL = import.meta.env.VITE_API_URL
 
-axios.get(URL+'products')
+axios.get(URL+'/products')
      .then(response => {
        products.value = response.data.data;
      })
