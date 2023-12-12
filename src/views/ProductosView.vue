@@ -81,7 +81,7 @@ import axios from 'axios';
  return favsProducts.value.some(favProduct => favProduct.id === product.id);
  };
 
-   return { products, errorMsg, store, favsProducts, filter, getFavs, isInFavs}
+   return { products, errorMsg, store, favsProducts, filter, URL, getFavs, isInFavs}
  },
 
   data: () => ({
@@ -91,6 +91,7 @@ import axios from 'axios';
   methods: {
 
     add(product) {
+      
       const carrito = this.store.carrito
       const index = carrito.findIndex(({ product: { id } }) => id === product.id);
       if (index != -1) {
@@ -104,6 +105,7 @@ import axios from 'axios';
     },
 
     addFav(product) {
+      const URL = import.meta.env.VITE_API_URL
       const token = this.store.userData.token
       const headers = {
         'x-token': token
