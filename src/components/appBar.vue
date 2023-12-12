@@ -33,7 +33,7 @@
           color="primary"
           dense
       variant="outlined"
-      type="info">Iniciar sesión para acceder a nuestros productos</v-alert>
+      type="info">Inicie sesión para acceder a nuestros productos</v-alert>
           <loginForm @close-dialog="showDialog = false"> 
           </loginForm>
 
