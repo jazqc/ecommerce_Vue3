@@ -16,8 +16,9 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 const products = ref([]);
+const URL = import.meta.env.VITE_API_URL
 
-axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products')
+axios.get(URL+'products')
      .then(response => {
        products.value = response.data.data;
      })

@@ -5,20 +5,20 @@
     <v-icon icon="mdi-close-circle-outline" color="primary" @click="this.$emit('close-dialog')"></v-icon>
   </div>
       <div v-if="showLoginForm">
-        <div class="text-subtitle-1 text-medium-emphasis">Account</div>
+        <div class="text-subtitle-1 text-medium-emphasis">Email</div>
         <v-form ref="loginForm" @submit.prevent="submit">
-          <v-text-field density="compact" placeholder="Email address" prepend-inner-icon="mdi-email-outline" id="email"
+          <v-text-field density="compact" placeholder="dirección de email" prepend-inner-icon="mdi-email-outline" id="email"
             type="email" v-model="formData.email" :rules="emailRules" required></v-text-field>
 
           <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-            Password
+            Contraseña
 
             <a class="text-caption text-decoration-none text-blue" href="#" rel="noopener noreferrer" target="_blank">
-              Forgot login password?</a>
+              Olvidó su contraeña?</a>
           </div>
 
           <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
-            density="compact" placeholder="Enter your password" prepend-inner-icon="mdi-lock-outline" id="password"
+            density="compact" placeholder="Ingrese contraseña" prepend-inner-icon="mdi-lock-outline" id="password"
             v-model="formData.password" :rules="passwordRules" required
             @click:append-inner="visible = !visible"></v-text-field>
 
@@ -31,7 +31,7 @@
 
           <v-btn block class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="loading"
             @click="load">
-            Log In
+            Iniciar sesión
           </v-btn>
 
           <v-btn block class="mb-8 text-none text-subtitle-1" color="primary" size="large"
@@ -87,9 +87,10 @@ export default {
       setTimeout(() => (this.loading = false), 3000)
     },
     submit() {
+      const URL = import.meta.env.VITE_API_URL
       this.$refs.loginForm.validate().then(valid => {
         if (valid) {
-          axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/auth/login', this.formData)
+          axios.post(URL+'/auth/login', this.formData)
             .then((response) => {
               this.formData.email = '';
               this.formData.password = '';

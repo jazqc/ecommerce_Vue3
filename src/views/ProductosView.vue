@@ -43,9 +43,10 @@ import axios from 'axios';
    const store = useAuthStore();
    const favsProducts = ref([]);
    const filter = ref('');
+   const URL = import.meta.env.VITE_API_URL
 
 
-   axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products')
+   axios.get(URL+'/products')
      .then(response => {
        products.value = response.data.data;
      })
@@ -58,7 +59,7 @@ import axios from 'axios';
       const headers = {
      'x-token': store.userData.token
    };
-     axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/favs', { headers })
+     axios.get(URL+'/favs', { headers })
        .then(response => {
          favsProducts.value = response.data.data;
        })
@@ -107,7 +108,7 @@ import axios from 'axios';
       const headers = {
         'x-token': token
       };
-      axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/favs', { products: product.id }, { headers })
+      axios.post(URL+'/favs', { products: product.id }, { headers })
         .then(response => {
           console.log(response)
           this.getFavs()

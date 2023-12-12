@@ -43,9 +43,9 @@ export default {
             const headers = {
                 'x-token': token
             };
-
+            const URL = import.meta.env.VITE_API_URL
             const { id, title, desc, img, price, stock } = this.formData
-            axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products', this.formData, { headers })
+            axios.post(URL+'/products', this.formData, { headers })
                 .then((response) => {
                     console.log(response);
                     this.formData.id = '';

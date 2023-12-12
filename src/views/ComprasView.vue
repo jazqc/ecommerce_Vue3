@@ -41,7 +41,8 @@ export default {
     const headers = {
       'x-token': token
     };
-    axios.get('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/orders', { headers })
+    const URL = import.meta.env.VITE_API_URL
+    axios.get(URL+'/orders', { headers })
       .then(response => {
         orders.value = response.data.data
         console.log(orders.value)

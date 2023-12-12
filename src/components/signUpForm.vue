@@ -73,7 +73,8 @@ export default {
     submit() {
       this.isLoading = true;
       const { name, email, password } = this.formData
-      axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/auth/register', this.formData)
+      const URL = import.meta.env.VITE_API_URL
+      axios.post(URL+'/auth/register', this.formData)
         .then((response) => {
           this.formData.name = '';
           this.formData.email = '';

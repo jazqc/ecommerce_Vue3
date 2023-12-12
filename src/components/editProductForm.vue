@@ -42,6 +42,7 @@ export default {
             const headers = {
                 'x-token': token
             };
+            const URL = import.meta.env.VITE_API_URL
             const editedFields = {};
             for (const key in this.formData) {
                 if (this.formData[key]) {
@@ -49,7 +50,7 @@ export default {
                 }
             }
 
-            axios.patch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/products/changeProduct', editedFields, { headers })
+            axios.patch(URL+'/products/changeProduct', editedFields, { headers })
                 .then((response) => {
                     console.log(response);
                     this.formData.id = '';

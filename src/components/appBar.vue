@@ -28,7 +28,13 @@
 
         </v-menu>
         <v-dialog v-model="showDialog" width="auto" persistent class="dialog">
-          <loginForm @close-dialog="showDialog = false"> //cambiarle el nombre a close-dialog as[i uso el icono para cerrar desde cualquier componente con esa funcion]
+          <v-alert v-if="!store.isLoggedIn"      prominent
+          border="top"
+          color="primary"
+          dense
+      variant="outlined"
+      type="info">Iniciar sesión para acceder a nuestros productos</v-alert>
+          <loginForm @close-dialog="showDialog = false"> 
           </loginForm>
 
         </v-dialog>
@@ -45,15 +51,20 @@ import loginForm from './loginForm.vue';
 import { RouterLink } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/store';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import navBar from './navBar.vue';
 
 const showDialog = ref(false);
 const store = useAuthStore();
 const router = useRouter();
 const drawer = ref(false);
+const showWelcomeAlert = ref(false)
 
-
+onMounted(() => {
+ if (!store.isLoggedIn) {
+   showDialog.value = true;
+ } 
+});
 const items = computed(() => [
   { id: 1, title: 'Login', condition: store.isLoggedIn == false },
   { id: 2, title: 'Mis compras', condition: store.isLoggedIn, path: '/compras' },
@@ -75,6 +86,7 @@ const carritoLength = computed(() => {
 watch(() => store.carrito, () => {
   return carritoLength.value = store.carrito.length;
 }); 
+
 
 const clicked = (item) => {
   if (item.id === 1) {
@@ -105,5 +117,9 @@ a.router-link, .v-app-bar-title{
   color: #f8f8f8;
   text-decoration: none;
 
+}
+div.v-alert {
+  margin-bottom: 3em;
+  background-color: #f8f8f8;
 }
 </style>

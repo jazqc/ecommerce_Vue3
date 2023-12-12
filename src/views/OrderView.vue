@@ -69,6 +69,7 @@
   },
 
   methods: {
+    
    calculateShippingCost() {
      if (this.code > 999 && this.code < 1500) {
        this.shippingCost = 0;
@@ -79,11 +80,12 @@
    submit() {
      const store = useAuthStore();
      const carrito = store.carrito;
- 
      const token = store.userData.token
      const headers = {
        'x-token':token
      };
+     const URL = import.meta.env.VITE_API_URL
+
   
      const items = carrito.map(item => {
        return {
@@ -101,7 +103,7 @@
        total += item.price * item.quantity;
      }
      const totalCost = total + this.shippingCost
-     axios.post('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/orders', {
+     axios.post(URL+'/orders', {
        totalPrice: total,
        shippingCost: this.shippingCost,
        shippingDetails: {

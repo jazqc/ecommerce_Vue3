@@ -63,7 +63,8 @@ export default {
   submitCode() {
     this.isLoading= true;
     const { email, code} = this.formDataCode
-    axios.patch('https://back-ecommerce-8eh9potsi-jazqc.vercel.app/auth/verify', this.formDataCode)
+    const URL = import.meta.env.VITE_API_URL
+    axios.patch(URL+'/auth/verify', this.formDataCode)
       .then((response) => {
           console.log("ok")
           this.success = true;
