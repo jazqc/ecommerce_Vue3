@@ -3,19 +3,19 @@
     <v-form @submit.prevent="submit" v-if="showSignUpForm">
       <div class="text-subtitle-1 text-medium-emphasis custom-form">Nombre</div>
 
-      <v-text-field density="compact" placeholder="nombre" id="name" v-model="formData.name" :rules="nameRules"
+      <v-text-field density="compact" placeholder="Ingrese su nombre" id="name" v-model="formData.name" :rules="nameRules"
         required></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis">Email</div>
-      <v-text-field density="compact" placeholder="Email address" prepend-inner-icon="mdi-email-outline" id="email"
+      <v-text-field density="compact" placeholder="Ingrese dirección de email" prepend-inner-icon="mdi-email-outline" id="email"
         type="email" v-model="formData.email" :rules="emailRules" required></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-        Password
+        Contraseña
       </div>
 
       <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
-        density="compact" placeholder="Enter your password" prepend-inner-icon="mdi-lock-outline" id="password"
+        density="compact" placeholder="Ingrese contraseña" prepend-inner-icon="mdi-lock-outline" id="password"
         v-model="formData.password" :rules="passwordRules" required
         @click:append-inner="visible = !visible"></v-text-field>
 

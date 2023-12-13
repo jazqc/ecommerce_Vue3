@@ -7,7 +7,7 @@
       <div v-if="showLoginForm">
         <div class="text-subtitle-1 text-medium-emphasis">Email</div>
         <v-form ref="loginForm" @submit.prevent="submit">
-          <v-text-field density="compact" placeholder="dirección de email" prepend-inner-icon="mdi-email-outline" id="email"
+          <v-text-field density="compact" placeholder="Ingrese su correo" prepend-inner-icon="mdi-email-outline" id="email"
             type="email" v-model="formData.email" :rules="emailRules" required></v-text-field>
 
           <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">

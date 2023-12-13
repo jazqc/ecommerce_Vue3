@@ -6,7 +6,7 @@
         <v-col v-for="item in items" :key="item.id" align="center" sm="6" md="4" lg="3">
 
           <v-item>
-            <v-card height="200px" class="d-flex flex-column pa-2">
+            <v-card height="220px" class="d-flex flex-column pa-2">
               <v-icon size="x-large" :color=item.color :icon=item.icon class="icon"></v-icon>
               <v-card-title>
                 {{ item.title }}
@@ -16,7 +16,7 @@
               </v-card-text>
               <v-spacer></v-spacer>
               <v-card-actions class="justify-center">
-                <v-btn @click="openForm(item)" color="primary" variant="tonal" rounded="sm">INGRESAR</v-btn>
+                <v-btn @click="openForm(item)" color="primary" variant="tonal" rounded="sm" >INGRESAR</v-btn>
               </v-card-actions>
             </v-card>
 

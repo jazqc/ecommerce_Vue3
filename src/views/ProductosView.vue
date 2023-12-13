@@ -3,6 +3,12 @@
     <v-alert color="error" variant="tonal" icon="$error" text="Debe estar logueado">
     </v-alert>
   </div>
+  <v-alert  v-if="!store.isLoggedIn"   prominent
+          border="top"
+          color="primary"
+          dense
+      variant="outlined"
+      type="info">Inicie sesión para acceder a nuestros productos</v-alert>
   <v-container fluid>
     <div>
       <v-row>

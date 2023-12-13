@@ -28,7 +28,7 @@
 
         </v-menu>
         <v-dialog v-model="showDialog" width="auto" persistent class="dialog">
-          <v-alert v-if="!store.isLoggedIn"      prominent
+          <v-alert  v-if="showWelcomeDialog"   prominent
           border="top"
           color="primary"
           dense
@@ -58,13 +58,19 @@ const showDialog = ref(false);
 const store = useAuthStore();
 const router = useRouter();
 const drawer = ref(false);
-const showWelcomeAlert = ref(false)
+const showWelcomeDialog = ref(false)
+
 
 onMounted(() => {
  if (!store.isLoggedIn) {
+  showWelcomeDialog.value = true;
    showDialog.value = true;
+   setTimeout(() => {
+    showWelcomeDialog.value = false;
+  }, 5000);
  } 
 });
+
 const items = computed(() => [
   { id: 1, title: 'Login', condition: store.isLoggedIn == false },
   { id: 2, title: 'Mis compras', condition: store.isLoggedIn, path: '/compras' },
@@ -94,7 +100,7 @@ const clicked = (item) => {
   }
   else if (item.id === 5) {
     localStorage.clear();
-    store.resetUserData();  //ARREGLAR
+    store.resetUserData(); 
   }
   else {
     router.push(item.path)
