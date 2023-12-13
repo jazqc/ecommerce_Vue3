@@ -5,7 +5,11 @@
   </div>
   <v-container fluid>
     <div>
+      <v-row>
+      <v-col cols="12" md="6" lg="6" class="d-flex justify-end" offset-lg="6">
       <v-select v-if="store.isLoggedIn" v-model="filter" :items="filterOptions" density="compact" label="Filtrar" class="select"></v-select>
+      </v-col>
+    </v-row>
     </div>
     <v-item-group >
       <v-row dense>
@@ -144,16 +148,10 @@ import axios from 'axios';
   object-fit: cover;
 }
 
-div.select {
-  width: 50%;
-}
-
-icon.mdi-heart-outline {
-  color: red;
-}
 
 div.v-card-title.title {
   font-weight: bold;
+  color: #555456;
 }
 
 div.v-card-subtitle.subtitle {

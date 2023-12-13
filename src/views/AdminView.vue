@@ -6,7 +6,7 @@
         <v-col v-for="item in items" :key="item.id" align="center" sm="6" md="4" lg="3">
 
           <v-item>
-            <v-card height="200px">
+            <v-card height="200px" class="d-flex flex-column pa-2">
               <v-icon size="x-large" :color=item.color :icon=item.icon class="icon"></v-icon>
               <v-card-title>
                 {{ item.title }}
@@ -14,8 +14,9 @@
               <v-card-text>
                 {{ item.description }}
               </v-card-text>
+              <v-spacer></v-spacer>
               <v-card-actions class="justify-center">
-                <v-btn @click="openForm(item)" color="primary" variant="tonal" rounded="sm">Open Form</v-btn>
+                <v-btn @click="openForm(item)" color="primary" variant="tonal" rounded="sm">INGRESAR</v-btn>
               </v-card-actions>
             </v-card>
 
@@ -44,7 +45,8 @@
   </v-container>
   <v-divider class="border-opacity-25"></v-divider>
   <div class="data_container">
-    <v-text-field v-model="search" prepend-icon="mdi-magnify" label="Search" single-line hide-details solo></v-text-field>
+    <v-text-field v-model="search" prepend-icon="mdi-magnify" label="Search" single-line hide-details solo>
+    </v-text-field>
     <v-data-table height="400px" fixed-header :headers="headers" :items="products" :search="search">
     </v-data-table>
   </div>
@@ -87,7 +89,6 @@ export default {
     * Fetches product data from the data base and assigns it to the `products` value.
     */
 const URL = import.meta.env.VITE_API_URL
-console.log(URL)
     const loadDB = () =>
       axios.get(URL+'/products')
         .then(response => {
@@ -118,5 +119,7 @@ console.log(URL)
 };
 </script>
 <style>
-div.data_container {}
+div.data_container {
+  padding: 1em;
+}
 </style>
