@@ -8,9 +8,9 @@
       <v-app-bar-title class="text-center text-h4">eScentWorld</v-app-bar-title>
     </router-link>
       <template v-slot:append>
-        <v-btn size="4.5rem">
+        <v-btn size="4.5rem" v-if="store.isLoggedIn">
           <v-badge :content="carritoLength">
-            <v-icon icon="mdi-cart-variant" color="whiteSoft" size="3rem" @click="toCarrito"></v-icon>
+            <v-icon  icon="mdi-cart-variant" color="whiteSoft" size="3rem" @click="toCarrito"></v-icon>
           </v-badge>
         </v-btn>
 
@@ -27,13 +27,18 @@
           </v-list>
 
         </v-menu>
-        <v-dialog v-model="showDialog" width="auto" persistent class="dialog">
+        <v-dialog v-model="showWelcomeDialog" width="auto" class="dialog">
           <v-alert  v-if="showWelcomeDialog"   prominent
           border="top"
           color="primary"
           dense
       variant="outlined"
-      type="info">Inicie sesión para acceder a nuestros productos</v-alert>
+      type="info">Bienvenido! Le sugerimos iniciar sesión para acceder a nuestros productos</v-alert>
+
+        </v-dialog>
+
+        <v-dialog v-model="showDialog" width="auto" persistent class="dialog">
+
           <loginForm @close-dialog="showDialog = false"> 
           </loginForm>
 
@@ -64,10 +69,9 @@ const showWelcomeDialog = ref(false)
 onMounted(() => {
  if (!store.isLoggedIn) {
   showWelcomeDialog.value = true;
-   showDialog.value = true;
    setTimeout(() => {
     showWelcomeDialog.value = false;
-  }, 5000);
+  }, 2500);
  } 
 });
 

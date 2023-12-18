@@ -1,6 +1,6 @@
 <template>
     <div>
-ABOUT
+PROXIMAMENTE
     </div>
 </template>
 

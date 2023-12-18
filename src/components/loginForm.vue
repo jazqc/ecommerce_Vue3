@@ -111,7 +111,6 @@ export default {
             .catch((error) => {
               if (error) {
                 this.errors = { data: error.response.data.errors, satus: true, msg: error.response.data.msg ? error.response.data.msg : 'Hay errores en el formulario, verifique sus datos'   }
-                // console.log(this.errors)
                 console.log(error.response.data.msg)
 
               } else {

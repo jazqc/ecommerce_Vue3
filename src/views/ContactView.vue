@@ -1,6 +1,6 @@
 <template>
     <div>
-CONTACTO
+PROXIMAMENTE
     </div>
 </template>
 
