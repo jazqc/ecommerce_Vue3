@@ -2,7 +2,7 @@
   <v-list>
     <v-list-item title="Productos" to="/productos"></v-list-item>
     <v-list-item title="Nosotros" to="/about"></v-list-item>
-    <v-list-item title="Contactanos" to="/contact"></v-list-item>
+    <v-list-item title="Contactános" to="/contact"></v-list-item>
     <v-list-item v-if="isAdminLogged" title="Administración" to="/adminPanel"></v-list-item>
   </v-list>
 </template>
