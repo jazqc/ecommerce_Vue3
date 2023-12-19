@@ -6,7 +6,7 @@
         <v-col v-for="item in items" :key="item.id" align="center" sm="6" md="4" lg="3">
 
           <v-item>
-            <v-card height="220px" class="d-flex flex-column pa-2">
+            <v-card height="220px" class="d-flex flex-column align-center justify-center fill-height pa-2">
               <v-icon size="x-large" :color=item.color :icon=item.icon class="icon"></v-icon>
               <v-card-title>
                 {{ item.title }}
