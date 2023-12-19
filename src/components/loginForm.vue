@@ -92,9 +92,6 @@ export default {
         if (valid) {
           axios.post(URL+'/auth/login', this.formData)
             .then((response) => {
-              this.formData.email = '';
-              this.formData.password = '';
-
               const userData = {
                 name: response.data.user.name,
                 email: response.data.user.email,
@@ -106,6 +103,7 @@ export default {
               const store = useAuthStore();
               store.setUserData(userData)
               this.$emit('close-dialog');
+
             })
 
             .catch((error) => {
@@ -120,6 +118,8 @@ export default {
             })
             .finally(() => {
               this.loading = false;
+              this.formData.email = '';
+              this.formData.password = '';
             });
         }
       });
