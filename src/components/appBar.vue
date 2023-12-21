@@ -65,7 +65,10 @@ const router = useRouter();
 const drawer = ref(false);
 const showWelcomeDialog = ref(false)
 
-
+/**
+* 
+* Show welcome message
+*/
 onMounted(() => {
  if (!store.isLoggedIn) {
   showWelcomeDialog.value = true;
@@ -85,6 +88,7 @@ const items = computed(() => [
 const filteredItems = computed(() => {
   return items.value.filter(item => item.condition);
 })
+
 watch(() => store.userData, () => {
  filteredItems.value = items.value.filter(item => item.condition);
 });

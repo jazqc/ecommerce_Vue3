@@ -37,6 +37,10 @@ export default {
         load() {
             this.loading = true;
         },
+        /**
+* 
+* Add product to the data base
+*/
         submitForm() {
             const store = useAuthStore();
             const token = store.userData.token
@@ -45,7 +49,7 @@ export default {
             };
             const URL = import.meta.env.VITE_API_URL
             const { id, title, desc, img, price, stock } = this.formData
-            axios.post(URL+'/products', this.formData, { headers })
+            axios.post(URL + '/products', this.formData, { headers })
                 .then((response) => {
                     console.log(response);
                     this.formData.id = '';

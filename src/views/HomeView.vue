@@ -1,13 +1,22 @@
 <template>
   <div class="hero">
-    <v-title class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg" primary>In fringilla justo
-      nec ante blandit dapibus. Aenean at varius dui.</v-title>
+    <h2 class="herotext-primary font-weight-bold text-center align-center text-h5 title-with-bg" primary>In fringilla
+      justo
+      nec ante blandit dapibus. Aenean at varius dui.</h2>
   </div>
   <v-container class="carousel">
-    <v-carousel cycle max-height="50em" hide-delimiter-background show-arrows="hover">
+    <v-carousel cycle interval="3000" max-height="50em" hide-delimiter-background show-arrows="hover">
       <v-carousel-item v-for="product in products" :key="product.id" :src="product.img" d-flex justify-center align-center
         show-arrows="hover"></v-carousel-item>
     </v-carousel>
+    <div v-if="loading" class="d-flex justify-center align-center fill-height">
+      <v-progress-circular
+      :size="70"
+      :width="7"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
+    </div>
   </v-container>
 </template>
   
@@ -16,15 +25,25 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 const products = ref([]);
+const loading = ref(false);
 const URL = import.meta.env.VITE_API_URL
 
-axios.get(URL+'/products')
-     .then(response => {
-       products.value = response.data.data;
-     })
-     .catch(error => {
-       console.error(error);
-     });
+/**
+* Fetches products from the data base and assigns it to the `products` value.
+*/
+const fetchProducts = async () => {
+ loading.value = true; 
+ try {
+   const response = await axios.get(URL + '/products');
+   products.value = response.data.data;
+ } catch (error) {
+   console.error(error);
+ } finally {
+   loading.value = false; 
+ }
+}
+
+fetchProducts(); 
 
 </script>
   
